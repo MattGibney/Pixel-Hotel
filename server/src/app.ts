@@ -1,15 +1,19 @@
 import * as net from 'net';
 import { Logger } from 'pino';
 import ModelFactory from './modelFactory';
+import DaoFactory from './daoFactory';
 import UserModel from './models/user';
-
-import HandshakeController from './controllers/handshake';
 import { parseMessages } from './utils/parser';
 
+import AuthController from './controllers/auth';
+import HandshakeController from './controllers/handshake';
+
 export interface Context {
+  logger: Logger;
   sendMessage: (message: string) => void;
   closeConnection: () => void;
   modelFactory: ModelFactory;
+  daoFactory: DaoFactory;
   user?: UserModel;
 }
 
@@ -18,9 +22,9 @@ const commandRouter = {
   KEYENCRYPTED: HandshakeController.KEYENCRYPTED,
   CLIENTIP: HandshakeController.CLIENTIP,
   FINDUSER: HandshakeController.FINDUSER,
-  APPROVENAME: HandshakeController.APPROVENAME,
-  REGISTER: HandshakeController.REGISTER,
-  LOGIN: HandshakeController.LOGIN,
+  APPROVENAME: AuthController.APPROVENAME,
+  REGISTER: AuthController.REGISTER,
+  LOGIN: AuthController.LOGIN,
   MESSENGERINIT: HandshakeController.MESSENGERINIT,
   UNIQUEMACHINEID: HandshakeController.UNIQUEMACHINEID,
   STAT: HandshakeController.STAT,
@@ -35,11 +39,12 @@ const commandRouter = {
   CHAT: HandshakeController.CHAT,
 };
 
-export const application = (logger: Logger) => {
+export const application = (logger: Logger, daoFactory: DaoFactory) => {
   const server = net.createServer((socket) => {
     logger.info({ remote: socket.remoteAddress }, 'Client connected.');
 
     const context: Context = {
+      logger,
       sendMessage: (message) => {
         logger.debug({ message }, 'Sending message:');
         socket.write(message);
@@ -48,6 +53,7 @@ export const application = (logger: Logger) => {
         socket.end();
       },
       modelFactory: new ModelFactory(),
+      daoFactory,
     };
 
     /**

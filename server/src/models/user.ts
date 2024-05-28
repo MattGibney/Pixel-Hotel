@@ -1,4 +1,5 @@
 import { Context } from '../app';
+import { UserRow } from '../daos/user';
 
 export default class UserModel {
   private ctx: Context;
@@ -13,7 +14,7 @@ export default class UserModel {
   public gender: string;
   public country: string;
   public hasSpecialRights: boolean;
-  public badgeType: number;
+  public badgeType: string;
 
   public gold: number = 0;
 
@@ -23,37 +24,29 @@ export default class UserModel {
   public hRot: number = 0; // head rotation
   public bRot: number = 0; // body rotation
 
-  constructor(ctx: Context, data: any) {
+  constructor(ctx: Context, data: UserRow) {
     this.ctx = ctx;
 
-    this.userName = data.userName;
+    this.userName = data.username;
     this.email = data.email;
     this.figure = data.figure;
     this.birthday = data.birthday;
-    this.phoneNumber = data.phoneNumber;
-    this.customData = data.customData;
-    this.hasReadAgreement = data.hasReadAgreement;
+    this.phoneNumber = data.phone_number;
+    this.customData = data.custom_data;
+    this.hasReadAgreement = data.has_read_agreement;
     this.gender = data.gender;
     this.country = data.country;
-    this.hasSpecialRights = data.hasSpecialRights;
-    this.badgeType = data.badgeType;
+    this.hasSpecialRights = data.has_special_rights;
+    this.badgeType = data.badge_type;
+
+    this.gold = data.gold;
   }
 
   static async fetchByUsername(ctx: Context, username: string): Promise<UserModel | null> {
-    // return null;
-    return new UserModel(ctx, {
-      userName: 'test',
-      email: 'test@test.com',
-      figure: 'sd=001/0&hr=001/255,255,255&hd=002/255,204,153&ey=001/0&fc=001/255,204,153&bd=001/255,204,153&lh=001/255,204,153&rh=001/255,204,153&ch=001/232,177,55&ls=001/232,177,55&rs=001/232,177,55&lg=001/119,159,187&sh=001/175,220,223',
-      birthday: '02.01.1992',
-      phoneNumber: '+44',
-      customData: 'Hello World!',
-      hasReadAgreement: '1',
-      gender: 'MALE',
-      country: '',
-      hasSpecialRights: '',
-      badgeType: '',
-    });
+    const userData = await ctx.daoFactory.user.fetchByUsername(ctx.logger, username);
+    if (!userData) return null;
+
+    return new UserModel(ctx, userData);
   }
 
   serialise(type: 'INFORETRIEVE' | 'STATUS'): string {
@@ -65,10 +58,10 @@ export default class UserModel {
         "birthday": this.birthday,
         "phonenumber": this.phoneNumber,
         "customData": this.customData,
-        "had_read_agreement": this.hasReadAgreement,
+        "had_read_agreement": this.hasReadAgreement ? '1' : '0',
         "sex": this.gender,
         "country": this.country,
-        "has_special_rights": this.hasSpecialRights,
+        "has_special_rights": this.hasSpecialRights ? '1' : '0',
         "badge_type": this.badgeType,
       };
 

@@ -37,6 +37,7 @@ and insights gained from the development process.
 
 * [ ] Authentication
   * [ ] Login
+  * [ ] Password Hashing
   * [ ] Forgot Password
   * [ ] Create Account
 * [ ] List Public Rooms

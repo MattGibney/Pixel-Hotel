@@ -1,2 +1,5 @@
 dcr/
 node_modules/
+coverage/
+
+.env
