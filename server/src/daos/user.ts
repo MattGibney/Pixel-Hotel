@@ -1,5 +1,6 @@
 import { Knex } from 'knex';
 import { Logger } from 'pino';
+import { ulid } from 'ulid';
 
 export type UserRow = {
   id: string;
@@ -32,4 +33,15 @@ export default class UserDao {
 
     return userData;
   }
+
+  async create(logger: Logger, user: Partial<UserRow>): Promise<UserRow> {
+    const id = `USR-${ulid()}`;
+    user = { ...user, id };
+    const [createdUser] = await this.database('users')
+      .insert(user)
+      .returning('*');
+    logger.debug({ user }, 'Creating user');
+    return createdUser;
+  }
 }
+

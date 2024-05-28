@@ -24,9 +24,41 @@ export default {
   },
 
   /**
+   * 
+   * 
    * @todo Implement this command.
    */
-  REGISTER: (ctx: Context, args: string[]) => {
+  REGISTER: async (ctx: Context, args: string[]) => {
+    const rawData = args[0];
+
+    // Split the input string by '\r' to separate each key-value pair
+    const keyValuePairs = rawData.split('\r');
+    
+    // Map over each key-value pair, split by the first '=', and return as a tuple
+    const result = keyValuePairs.map(pair => {
+        const [key, ...valueParts] = pair.split('=');
+        return [key, valueParts.join('=')]; // Join the value parts back together in case of additional '='
+    });
+
+    const newUserData = Object.fromEntries(result);
+
+    const user = await ctx.modelFactory.user.create(ctx, {
+      username: newUserData.name,
+      password_hash: newUserData.password,
+      email: newUserData.email,
+      figure: newUserData.figure,
+      birthday: newUserData.birthday,
+      phone_number: newUserData.phonenumber,
+      custom_data: newUserData.customData,
+      has_read_agreement: newUserData.has_read_agreement === '1',
+      gender: newUserData.sex,
+      country: newUserData.country,
+      badge_type: '',
+      has_special_rights: false,
+      gold: 10
+    });
+
+
     // NOOP
     console.log('REGISTER', args);
     

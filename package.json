@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "ts-node server/src/main.ts",
     "test": "jest"
   },
   "keywords": [],
@@ -15,7 +16,8 @@
     "pg": "^8.11.5",
     "pino": "^9.1.0",
     "pino-pretty": "^11.1.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",

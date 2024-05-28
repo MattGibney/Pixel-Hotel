@@ -42,13 +42,6 @@ export default class UserModel {
     this.gold = data.gold;
   }
 
-  static async fetchByUsername(ctx: Context, username: string): Promise<UserModel | null> {
-    const userData = await ctx.daoFactory.user.fetchByUsername(ctx.logger, username);
-    if (!userData) return null;
-
-    return new UserModel(ctx, userData);
-  }
-
   serialise(type: 'INFORETRIEVE' | 'STATUS'): string {
     if (type === 'INFORETRIEVE') {
       const data = {
@@ -85,5 +78,17 @@ export default class UserModel {
     });
 
     return statusString;
+  }
+
+  static async fetchByUsername(ctx: Context, username: string): Promise<UserModel | null> {
+    const userData = await ctx.daoFactory.user.fetchByUsername(ctx.logger, username);
+    if (!userData) return null;
+
+    return new UserModel(ctx, userData);
+  }
+
+  static async create(ctx: Context, data: Partial<UserRow>): Promise<UserModel> {
+    const userData = await ctx.daoFactory.user.create(ctx.logger, data);
+    return new UserModel(ctx, userData);
   }
 }
