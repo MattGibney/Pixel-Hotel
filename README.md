@@ -36,10 +36,10 @@ functionality. We will be updating this repository regularly with our progress
 and insights gained from the development process.
 
 * [ ] Authentication
-  * [ ] Login
+  * [*] Login
   * [ ] Password Hashing
   * [ ] Forgot Password
-  * [ ] Create Account
+  * [*] Create Account
 * [ ] List Public Rooms
 * [ ] Enter Public Room
 * [ ] Chat

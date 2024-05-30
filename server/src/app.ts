@@ -4,6 +4,7 @@ import ModelFactory from './modelFactory';
 import DaoFactory from './daoFactory';
 import UserModel from './models/user';
 import { parseMessages } from './utils/parser';
+import Room from './room';
 
 import AuthController from './controllers/auth';
 import HandshakeController from './controllers/handshake';
@@ -14,6 +15,7 @@ export interface Context {
   closeConnection: () => void;
   modelFactory: ModelFactory;
   daoFactory: DaoFactory;
+  room?: Room;
   user?: UserModel;
 }
 
@@ -39,7 +41,7 @@ const commandRouter = {
   CHAT: HandshakeController.CHAT,
 };
 
-export const application = (logger: Logger, daoFactory: DaoFactory) => {
+export const application = (logger: Logger, daoFactory: DaoFactory, room?: Room) => {
   const server = net.createServer((socket) => {
     logger.info({ remote: socket.remoteAddress }, 'Client connected.');
 
@@ -54,6 +56,7 @@ export const application = (logger: Logger, daoFactory: DaoFactory) => {
       },
       modelFactory: new ModelFactory(),
       daoFactory,
+      room,
     };
 
     /**
