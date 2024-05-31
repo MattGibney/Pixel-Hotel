@@ -2,7 +2,7 @@ import { Context } from '../app';
 import { UserRow } from '../daos/user';
 
 export default class UserModel {
-  private ctx: Context;
+  public ctx: Context;
 
   public userName: string;
   public email: string;

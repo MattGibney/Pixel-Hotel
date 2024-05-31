@@ -42,6 +42,29 @@ export default class Room {
   }
 
   chat(user: UserModel, message: string) {
-    
+    this.users.forEach(u => u.ctx.sendMessage(`# CHAT\r${user.userName} ${message} ##`));
+  }
+
+  move(user: UserModel, x: number, y: number) {
+    user.xPos = x;
+    user.yPos = y;
+
+    const statusStrings = this.users.map(u => u.serialise('STATUS')).join('\r');
+    this.users.forEach(u => {
+      u.ctx.sendMessage(`# STATUS\r${statusStrings} ##`);
+    });
+  }
+
+  addUser(user: UserModel) {
+    this.users.push(user);
+
+    this.users.forEach(u => {
+      u.ctx.sendMessage(`# USERS\r${user.userName} ${user.figure} ${user.xPos} ${user.yPos} ${user.zPos} ${user.customData} ##`)
+      u.ctx.sendMessage(`# STATUS\r${user.serialise('STATUS')} ##`);
+    });
+  }
+
+  removeUser(user: UserModel) {
+    this.users = this.users.filter(u => u !== user);
   }
 }

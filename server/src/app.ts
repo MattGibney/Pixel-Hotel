@@ -83,6 +83,10 @@ export const application = (logger: Logger, daoFactory: DaoFactory, room?: Room)
     });
 
     socket.on('end', () => {
+      const user = context.user;
+      if (user) {
+        context.room?.removeUser(user);
+      }
       logger.info('Client disconnected.');
     });
   });

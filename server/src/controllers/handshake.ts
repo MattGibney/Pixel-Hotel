@@ -154,17 +154,18 @@ export default {
 
   MOVE: (ctx: Context, args: string[]) => {
     if (!ctx.user) return;
-    ctx.user.xPos = parseInt(args[0]);
-    ctx.user.yPos = parseInt(args[1]);
-
-    ctx.sendMessage(`# STATUS\r${ctx.user?.serialise('STATUS')} ##`);
+    
+    const x = parseInt(args[0]);
+    const y = parseInt(args[1]);
+    ctx.room?.move(ctx.user, x, y);
   },
 
   CHAT: (ctx: Context, args: string[]) => {
     const message = args.join(' ');
     console.log('CHAT', message);
     if (!ctx.user) return;
-    ctx.sendMessage(`# CHAT\r${ctx.user.userName} ${message} ##`);
+    ctx.room?.chat(ctx.user, message);
+    // ctx.sendMessage(`# CHAT\r${ctx.user.userName} ${message} ##`);
   },
 
   HABBOREP: (ctx: Context, args: string[]) => {

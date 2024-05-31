@@ -42,6 +42,8 @@ export default {
 
     const newUserData = Object.fromEntries(result);
 
+    console.log('REGISTER', args);
+
     const user = await ctx.modelFactory.user.create(ctx, {
       username: newUserData.name,
       password_hash: newUserData.password,
@@ -57,10 +59,6 @@ export default {
       has_special_rights: false,
       gold: 10
     });
-
-
-    // NOOP
-    console.log('REGISTER', args);
     
   },
 
@@ -87,7 +85,9 @@ export default {
     const objects = ctx.room?.objects.map(obj => obj.join('')).join('\r');
     ctx.sendMessage(`# OBJECTS WORLD 0 lobby_a\r${objects} ##`);
     // ctx.sendMessage('# ACTIVE_OBJECTS ##')
-    ctx.sendMessage(`# USERS\r${user.userName} ${user.figure} ${user.xPos} ${user.yPos} ${user.zPos} ${user.customData} ##`);
+    
+    const userStrings = ctx.room?.users.map(user => `${user.userName} ${user.figure} ${user.xPos} ${user.yPos} ${user.zPos} ${user.customData}`).join('\r');
+    ctx.sendMessage(`# USERS\r${userStrings} ##`);
 
     const entryPos = { x: 12, y: 27, z: 1, rotation: { head: 0, body: 0 } };
     ctx.user.xPos = entryPos.x;
@@ -96,5 +96,7 @@ export default {
     ctx.user.hRot = entryPos.rotation.head;
     ctx.user.bRot = entryPos.rotation.body;
     ctx.sendMessage(`# STATUS\r${ctx.user?.serialise('STATUS')} ##`);
+
+    ctx.room?.addUser(user);
   }
 };
