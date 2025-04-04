@@ -42,8 +42,6 @@ export default {
 
     const newUserData = Object.fromEntries(result);
 
-    console.log('REGISTER', args);
-
     const user = await ctx.modelFactory.user.create(ctx, {
       username: newUserData.name,
       password_hash: newUserData.password,

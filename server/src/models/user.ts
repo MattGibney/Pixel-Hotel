@@ -24,6 +24,8 @@ export default class UserModel {
   public hRot: number = 0; // head rotation
   public bRot: number = 0; // body rotation
 
+  public navigationPath: number[][] = [];
+
   constructor(ctx: Context, data: UserRow) {
     this.ctx = ctx;
 
@@ -67,15 +69,15 @@ export default class UserModel {
       return dataString;
     }
 
-    const statuses: { type: string }[] = [
-      // {
-      //   type: 'sit'
-      // }
-    ];
+    // const statuses: { type: string }[] = [];
     let statusString = `${this.userName} ${this.xPos},${this.yPos},${this.zPos},${this.hRot},${this.bRot}/`;
-    statuses.forEach((status) => {
-      statusString += `${status.type} 0/`;
-    });
+    // statuses.forEach((status) => {
+    //   statusString += `${status.type} 13,19,1/`;
+    // });
+    if (this.navigationPath.length > 0) {
+      const next = this.navigationPath[0];
+      statusString += `mv ${next[0]},${next[1]},1/`;
+    }
 
     return statusString;
   }

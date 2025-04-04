@@ -111,7 +111,7 @@ export default {
    */
   INITUNITLISTENER: (ctx: Context, args: string[]) => {
     // console.log('INITUNITLISTENER', args);
-    ctx.sendMessage('# ALLUNITS\rMain Lobby,0,25,127.0.0.1/127.0.0.1,37121,Main Lobby\tlobby,0,25,lobby_1\r ##');
+    ctx.sendMessage('# ALLUNITS\rMain Lobby,0,25,192.168.1.31/192.168.1.31,37121,Main Lobby\tlobby,0,25,lobby_1\r ##');
   },
 
   /**
