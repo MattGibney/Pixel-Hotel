@@ -4,7 +4,7 @@ import ModelFactory from './modelFactory';
 import DaoFactory from './daoFactory';
 import UserModel from './models/user';
 import { parseMessages } from './utils/parser';
-import Room from './room';
+import Room from './room_old';
 
 import AuthController from './controllers/auth';
 import HandshakeController from './controllers/handshake';
