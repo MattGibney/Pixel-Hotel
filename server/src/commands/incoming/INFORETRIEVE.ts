@@ -1,4 +1,5 @@
 import { Command } from '../../commandFactory';
+import Player from '../../player';
 
 /**
  * This appears to be the login command. It's called with a username and

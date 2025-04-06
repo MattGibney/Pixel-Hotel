@@ -7,6 +7,7 @@ import DaoFactory from './daoFactory';
 import Room from './room';
 import Hotel from './hotel';
 
+import hotelViewData from './rooms/hotelView';
 import lobbyData from './rooms/lobby';
 
 const knex = Knex(knexConfig);
@@ -24,6 +25,7 @@ const daoFactory = new DaoFactory(knex);
 
 const hotel = new Hotel(logger, daoFactory);
 
+hotel.addRoom(hotelViewData);
 hotel.addRoom(lobbyData);
 
 
@@ -39,6 +41,7 @@ app.get('/rooms', (req, res) => {
     id: rooms[key].id,
     port: rooms[key].port,
     status: rooms[key].status,
+    clients: rooms[key].clients.map((client) => client.player?.id),
   }));
   res.json(roomList);
 });

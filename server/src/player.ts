@@ -1,5 +1,4 @@
 import Hotel from './hotel';
-import Room from './room';
 
 export type PlayerDefinition = {
   id: string;
@@ -11,7 +10,6 @@ export default class Player {
 
   public id: string;
   public userName: string;
-  public currentRoom: Room | null = null;
 
   public xPos: number = 0; // x position
   public yPos: number = 0; // y position
@@ -19,33 +17,13 @@ export default class Player {
   public hRot: number = 0; // head rotation
   public bRot: number = 0; // body rotation
 
+  public figure: string = 'sd=001/0&hr=001/255,255,255&hd=002/255,204,153&ey=001/0&fc=001/255,204,153&bd=001/255,204,153&lh=001/255,204,153&rh=001/255,204,153&ch=001/232,177,55&ls=001/232,177,55&rs=001/232,177,55&lg=001/119,159,187&sh=001/175,220,223s';
+  public customData: string = '';
+
   constructor(hotel: Hotel, data: PlayerDefinition) {
     this.hotel = hotel;
 
     this.id = data.id;
     this.userName = data.userName;
   }
-
-  // async moveToRoom(desiredRoomID: string) {
-  //   // If the player is currently in a room. Leave it first.
-  //   if (this.currentRoomID) {
-  //     const currentRoom = this.hotel.rooms[this.currentRoomID];
-  //     if (!currentRoom) {
-  //       throw new Error(`Current room ${this.currentRoomID} not found`);
-  //     }
-
-  //     // Leave the current room.
-  //     this.hotel.logger.debug(`Player ${this.id} leaving room ${this.currentRoomID}`);
-  //     await currentRoom.playerLeave(this);
-  //   }
-
-  //   // Join the desired room.
-  //   const desiredRoom = this.hotel.rooms[desiredRoomID];
-  //   if (!desiredRoom) {
-  //     throw new Error(`Desired room ${desiredRoomID} not found`);
-  //   }
-  //   this.hotel.logger.debug(`Player ${this.id} joining room ${desiredRoomID}`);
-  //   await desiredRoom.playerJoin(this);
-  //   this.currentRoomID = desiredRoomID;
-  // }
 }
