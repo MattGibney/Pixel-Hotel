@@ -30,7 +30,7 @@ export default {
 
   /**
    * Example args: [ 'MacromediaSecretIPAddressCookie:', 'bd8e53e42066987ac842e9f9592e' ]
-   * @todo Understand what this command does and implement it.
+   * //TODO: Understand what this command does and implement it.
    */
   CLIENTIP: (ctx: Context, args: string[]) => {
     // NOOP
@@ -48,7 +48,7 @@ export default {
   },
 
   /**
-   * @todo Implement this command.
+   * //TODO: Implement this command.
    */
   MESSENGERINIT: (ctx: Context, args: string[]) => {
     ctx.sendMessage('# BUDDYLIST ##');
@@ -58,7 +58,7 @@ export default {
   },
 
   /**
-   * @todo Implement this command.
+   * //TODO: Implement this command.
    */
   UNIQUEMACHINEID: (ctx: Context, args: string[]) => {
     // NOOP
@@ -66,7 +66,7 @@ export default {
   },
 
   /**
-   * @todo Implement this command.
+   * //TODO: Implement this command.
    */
   STAT: (ctx: Context, args: string[]) => {
     // NOOP
@@ -78,7 +78,7 @@ export default {
    * password. There is also a LOGIN command but I suspect that's for entering
    * rooms.
    * 
-   * @todo Implement this command.
+   * //TODO: Implement this command.
    */
   INFORETRIEVE: async (ctx: Context, args: string[]) => {
     const username = args[0];
@@ -98,7 +98,7 @@ export default {
   },
 
   /**
-   * @todo Implement this command.
+   * //TODO: Implement this command.
    */
   GETADFORME: (ctx: Context, args: string[]) => {
     // NOOP
@@ -107,7 +107,7 @@ export default {
 
   /**
    * List public rooms.
-   * @todo Implement this command.
+   * //TODO: Implement this command.
    */
   INITUNITLISTENER: (ctx: Context, args: string[]) => {
     // console.log('INITUNITLISTENER', args);
@@ -115,7 +115,7 @@ export default {
   },
 
   /**
-   * @todo Implement this command.
+   * //TODO: Implement this command.
    */
   SEARCHBUSYFLATS: (ctx: Context, args: string[]) => {
     // console.log('SEARCHBUSYFLATS', args);
@@ -124,7 +124,7 @@ export default {
   },
   
   /**
-   * @todo Implement this command.
+   * //TODO: Implement this command.
    */
   GETCREDITS: (ctx: Context, args: string[]) => {
     if (!ctx.user) return;

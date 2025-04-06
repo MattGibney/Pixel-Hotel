@@ -1,16 +1,27 @@
 import Client from './client';
+
 import CLIENTIP from './commands/incoming/CLIENTIP';
+import GETADFORME from './commands/incoming/GETADFORME';
+import GETCREDITS from './commands/incoming/GETCREDITS';
 import HABBOREP from './commands/incoming/HABBOREP';
 import INFORETRIEVE from './commands/incoming/INFORETRIEVE';
+import INITUNITLISTENER from './commands/incoming/INITUNITLISTENER';
 import KEYENCRYPTED from './commands/incoming/KEYENCRYPTED';
+import MESSENGERINIT from './commands/incoming/MESSENGERINIT';
+import SEARCHBUSYFLATS from './commands/incoming/SEARCHBUSYFLATS';
 import STAT from './commands/incoming/STAT';
 import UNIQUEMACHINEID from './commands/incoming/UNIQUEMACHINEID';
 import VERSIONCHECK from './commands/incoming/VERSIONCHECK';
 
+import ALLUNITS from './commands/outgoing/ALLUNITS';
+import BUDDYLIST from './commands/outgoing/BUDDYLIST';
+import BUSY_FLAT_RESULTS from './commands/outgoing/BUSY_FLAT_RESULTS';
 import ENCRYPTION_OFF from './commands/outgoing/ENCRYPTION_OFF';
 import ERROR from './commands/outgoing/ERROR';
 import HELLO from './commands/outgoing/HELLO';
 import SECRET_KEY from './commands/outgoing/SECRET_KEY';
+import USEROBJECT from './commands/outgoing/USEROBJECT';
+import WALLETBALANCE from './commands/outgoing/WALLETBALANCE';
 
 export interface Command {
   client: Client;
@@ -20,17 +31,27 @@ export interface Command {
 export default {
   incoming: {
     CLIENTIP,
+    GETADFORME,
+    GETCREDITS,
     HABBOREP,
     INFORETRIEVE,
+    INITUNITLISTENER,
     KEYENCRYPTED,
+    MESSENGERINIT,
+    SEARCHBUSYFLATS,
     STAT,
     UNIQUEMACHINEID,
     VERSIONCHECK,
   },
   outgoing: {
+    ALLUNITS,
+    BUDDYLIST,
+    BUSY_FLAT_RESULTS,
     ENCRYPTION_OFF,
     ERROR,
     HELLO,
-    SECRET_KEY
+    SECRET_KEY,
+    USEROBJECT,
+    WALLETBALANCE
   },
 }

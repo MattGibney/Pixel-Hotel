@@ -5,12 +5,15 @@ import { Command } from '../../commandFactory';
  * password. There is also a LOGIN command but I suspect that's for entering
  * rooms.
  * 
- * @todo Implement this command.
+ * //TODO: Implement this command.
  */
 export default function INFORETRIEVE(props: Command) {
   const { client, args } = props;
 
-  client.room.hotel.commandFactory.outgoing.ERROR({ client, args: ['login incorrect'] });
+  // client.room.hotel.commandFactory.outgoing.ERROR({ client, args: ['login incorrect'] });
+
+  client.room.hotel.commandFactory.outgoing.USEROBJECT({ client });
+
   // const username = args[0];
   // const password = args[1];
 

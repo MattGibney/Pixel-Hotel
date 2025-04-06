@@ -26,7 +26,7 @@ export default {
   /**
    * 
    * 
-   * @todo Implement this command.
+   * //TODO: Implement this command.
    */
   REGISTER: async (ctx: Context, args: string[]) => {
     const rawData = args[0];
@@ -61,7 +61,7 @@ export default {
   },
 
   /**
-   * @todo Implement this command.
+   * //TODO: Implement this command.
    */
   LOGIN: async (ctx: Context, args: string[]) => {
     const username = args[0];

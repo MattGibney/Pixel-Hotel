@@ -10,7 +10,15 @@ import Hotel from './hotel';
 import lobbyData from './rooms/lobby';
 
 const knex = Knex(knexConfig);
-const logger = pino({ level: 'debug' });
+const logger = pino({
+  level: 'debug',
+  transport: {
+    target: 'pino-pretty',
+    options: {
+      colorize: true, // Enable colorized logs
+    },
+  },
+});
 
 const daoFactory = new DaoFactory(knex);
 

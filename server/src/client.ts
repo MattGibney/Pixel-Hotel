@@ -20,7 +20,7 @@ export default class Client {
       const messages = parseMessages(data.toString());
       
       messages.forEach((message) => {
-        this.room.hotel.logger.debug({ message }, `Received message from client ${this.id}`);
+        this.room.hotel.logger.trace({ message }, `Received message from client ${this.id}`);
         const command = message.command as keyof typeof this.room.hotel.commandFactory.incoming;
         if (!this.room.hotel.commandFactory.incoming[command]) {
           this.room.hotel.logger.error({ command }, `Unknown command: ${command}`);
@@ -33,6 +33,6 @@ export default class Client {
 
   public sendMessage(message: string) {
     this.socket.write(message);
-    this.room.hotel.logger.debug({ message }, `Sending message to client ${this.id}`);
+    this.room.hotel.logger.trace({ message }, `Sending message to client ${this.id}`);
   }
 }
