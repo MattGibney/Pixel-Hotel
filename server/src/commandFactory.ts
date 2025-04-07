@@ -10,6 +10,7 @@ import INITUNITLISTENER from './commands/incoming/INITUNITLISTENER';
 import KEYENCRYPTED from './commands/incoming/KEYENCRYPTED';
 import LOGIN from './commands/incoming/LOGIN';
 import MESSENGERINIT from './commands/incoming/MESSENGERINIT';
+import Move from './commands/incoming/Move';
 import SEARCHBUSYFLATS from './commands/incoming/SEARCHBUSYFLATS';
 import STAT from './commands/incoming/STAT';
 import UNIQUEMACHINEID from './commands/incoming/UNIQUEMACHINEID';
@@ -24,6 +25,7 @@ import HEIGHTMAP from './commands/outgoing/HEIGHTMAP';
 import HELLO from './commands/outgoing/HELLO';
 import OBJECTS_WORLD from './commands/outgoing/OBJECTS_WORLD';
 import SECRET_KEY from './commands/outgoing/SECRET_KEY';
+import STATUS from './commands/outgoing/STATUS';
 import USEROBJECT from './commands/outgoing/USEROBJECT';
 import USERS from './commands/outgoing/USERS';
 import WALLETBALANCE from './commands/outgoing/WALLETBALANCE';
@@ -45,6 +47,7 @@ export default {
     KEYENCRYPTED,
     LOGIN,
     MESSENGERINIT,
+    Move,
     SEARCHBUSYFLATS,
     STAT,
     UNIQUEMACHINEID,
@@ -60,6 +63,7 @@ export default {
     HELLO,
     OBJECTS_WORLD,
     SECRET_KEY,
+    STATUS,
     USEROBJECT,
     USERS,
     WALLETBALANCE

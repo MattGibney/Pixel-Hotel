@@ -7,6 +7,9 @@ export type RoomDefinition = {
   port: number;
 
   heightmap: (number | 'X')[][];
+  // Public rooms often have multiple entrance tiles. By making this an array,
+  // we are open to having players randomly appear on one of them.
+  doorPos: { x: number; y: number; z: number; }[];
   objects: {
     one: string;
     sprite: string;
@@ -26,6 +29,7 @@ export default class Room {
   public port: RoomDefinition['port'];
   public heightmap: RoomDefinition['heightmap'];
   public objects: RoomDefinition['objects'];
+  public doorPos: RoomDefinition['doorPos'];
 
   public status: 'started' | 'stopped' = 'stopped';
   public clients: Client[] = [];
@@ -39,6 +43,7 @@ export default class Room {
     this.port = data.port;
     this.heightmap = data.heightmap;
     this.objects = data.objects;
+    this.doorPos = data.doorPos;
 
     this.server = new Server((socket) => {
       const client = new Client(socket, this);
@@ -62,6 +67,30 @@ export default class Room {
   removeClient(client: Client) {
     this.clients = this.clients.filter((c) => c !== client);
     this.hotel.logger.debug(`Client ${client.id} removed from room ${this.id}`);
+  }
+
+  movePlayer(client: Client, x: number, y: number) {
+    if (!client.player) {
+      this.hotel.logger.error(`Client ${client.id} does not have a player`);
+      return;
+    }
+    if (this.heightmap[y][x] === 'X') {
+      this.hotel.logger.error(`Client ${client.id} tried to move to an invalid tile`);
+      return;
+    }
+    
+    const z = this.heightmap[y][x] as number;
+    if (z === undefined) {
+      this.hotel.logger.error(`Client ${client.id} tried to move to an invalid tile`);
+      return;
+    }
+
+    client.player.xPos = x;
+    client.player.yPos = y;
+    client.player.zPos = z;
+    this.hotel.logger.debug(`Client ${client.id} moved to (${x}, ${y}, ${z})`);
+
+    this.hotel.commandFactory.outgoing.STATUS({ client });
   }
 
   public start() {
