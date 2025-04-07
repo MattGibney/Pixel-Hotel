@@ -3,6 +3,7 @@ import Client from './client';
 import CLIENTIP from './commands/incoming/CLIENTIP';
 import GETADFORME from './commands/incoming/GETADFORME';
 import GETCREDITS from './commands/incoming/GETCREDITS';
+import GOAWAY from './commands/incoming/GOAWAY';
 import HABBOREP from './commands/incoming/HABBOREP';
 import INFORETRIEVE from './commands/incoming/INFORETRIEVE';
 import INITUNITLISTENER from './commands/incoming/INITUNITLISTENER';
@@ -37,6 +38,7 @@ export default {
     CLIENTIP,
     GETADFORME,
     GETCREDITS,
+    GOAWAY,
     HABBOREP,
     INFORETRIEVE,
     INITUNITLISTENER,

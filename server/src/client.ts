@@ -35,4 +35,9 @@ export default class Client {
     this.socket.write(message);
     this.room.hotel.logger.trace({ message }, `Sending message to client ${this.id}`);
   }
+
+  public closeConnection() {
+    this.socket.end();
+    this.room.hotel.logger.info(`Closing connection for client ${this.id}`);
+  }
 }
