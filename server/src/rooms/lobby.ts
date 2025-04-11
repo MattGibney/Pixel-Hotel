@@ -46,71 +46,227 @@ const lobbyData: RoomDefinition = {
     [X,X,X,X,X,X,X,X,X,X,X,X,1,1,X,X,X,X,X,X,X,X,X,X,X],
     [X,X,X,X,X,X,X,X,X,X,X,X,1,1,X,X,X,X,X,X,X,X,X,X,X],
   ],
-  // f90 flower1 9 0 7 0
-  // S110 chairf2b 11 0 7 4
-  // s120 chairf2 12 0 7 4
-  // t130 table1 13 0 7 2
-  // S140 chairf2b 14 0 7 4
-  // s150 chairf2 15 0 7 4
-  // w160 watermatic 16 0 7 4
-  // T92 telkka 9 2 7 2
-  // f93 flower1 9 3 7 0
-  // Z113 chairf2d 11 3 7 0
-  // s123 chairf2 12 3 7 0
-  // t133 table1 13 3 7 2
-  // Z143 chairf2d 14 3 7 0
-  // s153 chairf2 15 3 7 0
-  // f124 flower1 12 4 3 0
-  // f164 flower1 16 4 3 0
-  // S07 chairf2b 0 7 3 4
-  // s17 chairf2 1 7 3 4
-  // Z010 chairf2d 0 10 3 0
-  // s110 chairf2 1 10 3 0
-  // r2112 roommatic 21 12 1 4
-  // r2212 roommatic 22 12 1 4
-  // r2312 roommatic 23 12 1 4
-  // r2412 roommatic 24 12 1 4
-  // S014 chairf2b 0 14 3 4
-  // s114 chairf2 1 14 3 4
-  // w1314 watermatic 13 14 1 2
-  // w1215 watermatic 12 15 1 4
-  // c1916 chairf1 19 16 1 4
-  // C2116 table2c 21 16 1 2
-  // c2316 chairf1 23 16 1 4
-  // Z017 chairf2d 0 17 3 0
-  // s117 chairf2 1 17 3 0
-  // D2117 table2b 21 17 1 2
-  // c1918 chairf1 19 18 1 0
-  // d2118 table2 21 18 1 2
-  // c2318 chairf1 23 18 1 0
-  // S721 chairf2b 7 21 2 2
-  // z722 chairf2c 7 22 2 2
-  // z723 chairf2c 7 23 2 2
-  // z724 chairf2c 7 24 2 2
-  // s725 chairf2 7 25 2 2
-  // t726 table1 7 26 2 2
-  // e1026 flower2 10 26 1 2
 
   objects: [
     {
-      one: 's110', // ID?
-      sprite: 'chairf2b',
-      pos: {
-        x: 11,
-        y: 0,
-        z: 7,
-      },
-      rotation: '4',
+      id: 'f90',
+      sprite: 'flower1',
+      pos: { x: 9, y: 0, z: 7, r: 0 },
     },
     {
-      one: 's120',
+      id: 's110',
+      sprite: 'chairf2b',
+      pos: { x: 11, y: 0, z: 7, r: 4 },
+    },
+    {
+      id: 's120',
       sprite: 'chairf2',
-      pos: {
-        x: 12,
-        y: 0,
-        z: 7,
-      },
-      rotation: '4',
+      pos: { x: 12, y: 0, z: 7, r: 4 },
+    },
+    {
+      id: 't130',
+      sprite: 'table1',
+      pos: { x: 13, y: 0, z: 7, r: 2 },
+    },
+    {
+      id: 'S140',
+      sprite: 'chairf2b',
+      pos: { x: 14, y: 0, z: 7, r: 4 },
+    },
+    {
+      id: 's150',
+      sprite: 'chairf2',
+      pos: { x: 15, y: 0, z: 7, r: 4 },
+    },
+    {
+      id: 'w160',
+      sprite: 'watermatic',
+      pos: { x: 16, y: 0, z: 7, r: 4 },
+    },
+    {
+      id: 'T92',
+      sprite: 'telkka',
+      pos: { x: 9, y: 2, z: 7, r: 2 },
+    },
+    {
+      id: 'f93',
+      sprite: 'flower1',
+      pos: { x: 9, y: 3, z: 7, r: 0 },
+    },
+    {
+      id: 'z113',
+      sprite: 'chairf2d',
+      pos: { x: 11, y: 3, z: 7, r: 0 },
+    },
+    {
+      id: 's123',
+      sprite: 'chairf2',
+      pos: { x: 12, y: 3, z: 7, r: 0 },
+    },
+    {
+      id: 't133',
+      sprite: 'table1',
+      pos: { x: 13, y: 3, z: 7, r: 2 },
+    },
+    {
+      id: 'Z143',
+      sprite: 'chairf2d',
+      pos: { x: 14, y: 3, z: 7, r: 0 },
+    },
+    {
+      id: 's153',
+      sprite: 'chairf2',
+      pos: { x: 15, y: 3, z: 7, r: 0 },
+    },
+    {
+      id: 'f124',
+      sprite: 'flower1',
+      pos: { x: 12, y: 4, z: 3, r: 0 },
+    },
+    {
+      id: 'f164',
+      sprite: 'flower1',
+      pos: { x: 16, y: 4, z: 3, r: 0 },
+    },
+    {
+      id: 'S07',
+      sprite: 'chairf2b',
+      pos: { x: 0, y: 7, z: 3, r: 4 },
+    },
+    {
+      id: 's17',
+      sprite: 'chairf2',
+      pos: { x: 1, y: 7, z: 3, r: 4 },
+    },
+    {
+      id: 'Z010',
+      sprite: 'chairf2d',
+      pos: { x: 0, y: 10, z: 3, r: 0 },
+    },
+    {
+      id: 's110',
+      sprite: 'chairf2',
+      pos: { x: 1, y: 10, z: 3, r: 0 },
+    },
+    {
+      id: 'r2112',
+      sprite: 'roommatic',
+      pos: { x: 21, y: 12, z: 1, r: 4 },
+    },
+    {
+      id: 'r2212',
+      sprite: 'roommatic',
+      pos: { x: 22, y: 12, z: 1, r: 4 },
+    },
+    {
+      id: 'r2312',
+      sprite: 'roommatic',
+      pos: { x: 23, y: 12, z: 1, r: 4 },
+    },
+    {
+      id: 'r2412',
+      sprite: 'roommatic',
+      pos: { x: 24, y: 12, z: 1, r: 4 },
+    },
+    {
+      id: 's014',
+      sprite: 'chairf2b',
+      pos: { x: 0, y: 14, z: 3, r: 4 },
+    },
+    {
+      id: 's114',
+      sprite: 'chairf2',
+      pos: { x: 1, y: 14, z: 3, r: 4 },
+    },
+    {
+      id: 'w1314',
+      sprite: 'watermatic',
+      pos: { x: 13, y: 14, z: 1, r: 2 },
+    },
+    {
+      id: 'w125',
+      sprite: 'watermatic',
+      pos: { x: 12, y: 15, z: 1, r: 4 },
+    },
+    {
+      id: 'c1916',
+      sprite: 'chairf1',
+      pos: { x: 19, y: 16, z: 1, r: 4 },
+    },
+    {
+      id: 'X2116',
+      sprite: 'table2c',
+      pos: { x: 21, y: 16, z: 1, r: 2 },
+    },
+    {
+      id: 'c2316',
+      sprite: 'chairf1',
+      pos: { x: 23, y: 16, z: 1, r: 4 },
+    },
+    {
+      id: 'Z017',
+      sprite: 'chairf2d',
+      pos: { x: 0, y: 17, z: 3, r: 0 },
+    },
+    {
+      id: 's117',
+      sprite: 'chairf2',
+      pos: { x: 1, y: 17, z: 3, r: 0 },
+    },
+    {
+      id: 'D2117',
+      sprite: 'table2b',
+      pos: { x: 21, y: 17, z: 1, r: 2 },
+    },
+    {
+      id: 'c1918',
+      sprite: 'chairf1',
+      pos: { x: 19, y: 18, z: 1, r: 0 },
+    },
+    {
+      id: 'd2118',
+      sprite: 'table2',
+      pos: { x: 21, y: 18, z: 1, r: 2 },
+    },
+    {
+      id: 'c2318',
+      sprite: 'chairf1',
+      pos: { x: 23, y: 18, z: 1, r: 0 },
+    },
+    {
+      id: 'S721',
+      sprite: 'chairf2b',
+      pos: { x: 7, y: 21, z: 2, r: 2 },
+    },
+    {
+      id: 'z722',
+      sprite: 'chairf2c',
+      pos: { x: 7, y: 22, z: 2, r: 2 },
+    },
+    {
+      id: 'z723',
+      sprite: 'chairf2c',
+      pos: { x: 7, y: 23, z: 2, r: 2 },
+    },
+    {
+      id: 'z724',
+      sprite: 'chairf2c',
+      pos: { x: 7, y: 24, z: 2, r: 2 },
+    },
+    {
+      id: 's725',
+      sprite: 'chairf2',
+      pos: { x: 7, y: 25, z: 2, r: 2 },
+    },
+    {
+      id: 't726',
+      sprite: 'table1',
+      pos: { x: 7, y: 26, z: 2, r: 2 },
+    },
+    {
+      id: 'e1026',
+      sprite: 'flower2',
+      pos: { x: 10, y: 26, z: 1, r: 2 },
     },
   ],
 };

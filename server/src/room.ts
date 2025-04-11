@@ -11,14 +11,14 @@ export type RoomDefinition = {
   // we are open to having players randomly appear on one of them.
   doorPos: { x: number; y: number; z: number; }[];
   objects: {
-    one: string;
+    id: string;
     sprite: string;
     pos: {
       x: number;
       y: number;
       z: number;
+      r: number;
     };
-    rotation: string;
   }[];
 };
 
@@ -88,7 +88,7 @@ export default class Room {
     client.player.xPos = x;
     client.player.yPos = y;
     client.player.zPos = z;
-    this.hotel.logger.debug(`Client ${client.id} moved to (${x}, ${y}, ${z})`);
+    this.hotel.logger.trace(`Client ${client.id} moved to (${x}, ${y}, ${z})`);
 
     this.hotel.commandFactory.outgoing.STATUS({ client });
   }

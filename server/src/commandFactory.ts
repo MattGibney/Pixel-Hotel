@@ -13,6 +13,7 @@ import MESSENGERINIT from './commands/incoming/MESSENGERINIT';
 import Move from './commands/incoming/Move';
 import SEARCHBUSYFLATS from './commands/incoming/SEARCHBUSYFLATS';
 import STAT from './commands/incoming/STAT';
+import STATUSOK from './commands/incoming/STATUSOK';
 import UNIQUEMACHINEID from './commands/incoming/UNIQUEMACHINEID';
 import VERSIONCHECK from './commands/incoming/VERSIONCHECK';
 
@@ -24,6 +25,7 @@ import ERROR from './commands/outgoing/ERROR';
 import HEIGHTMAP from './commands/outgoing/HEIGHTMAP';
 import HELLO from './commands/outgoing/HELLO';
 import OBJECTS_WORLD from './commands/outgoing/OBJECTS_WORLD';
+import OK from './commands/outgoing/OK';
 import SECRET_KEY from './commands/outgoing/SECRET_KEY';
 import STATUS from './commands/outgoing/STATUS';
 import USEROBJECT from './commands/outgoing/USEROBJECT';
@@ -50,6 +52,7 @@ export default {
     Move,
     SEARCHBUSYFLATS,
     STAT,
+    STATUSOK,
     UNIQUEMACHINEID,
     VERSIONCHECK,
   },
@@ -62,6 +65,7 @@ export default {
     HEIGHTMAP,
     HELLO,
     OBJECTS_WORLD,
+    OK,
     SECRET_KEY,
     STATUS,
     USEROBJECT,
