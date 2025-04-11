@@ -8,9 +8,11 @@ const lobbyData: RoomDefinition = {
 
   doorPos: [
     {
-      x: 12,
-      y: 28,
-      z: 1,
+      xPos: 12,
+      yPos: 28,
+      zPos: 1,
+      bRot: 1,
+      hRot: 1,
     },
   ],
   heightmap: [

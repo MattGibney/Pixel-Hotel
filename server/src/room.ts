@@ -1,6 +1,8 @@
 import { Server } from 'net';
 import Hotel from './hotel';
 import Client from './client';
+import { planPath } from './utils/plotPath';
+import { PlayerPos } from './player';
 
 export type RoomDefinition = {
   id: string;
@@ -9,7 +11,7 @@ export type RoomDefinition = {
   heightmap: (number | 'X')[][];
   // Public rooms often have multiple entrance tiles. By making this an array,
   // we are open to having players randomly appear on one of them.
-  doorPos: { x: number; y: number; z: number; }[];
+  doorPos: PlayerPos[];
   objects: {
     id: string;
     sprite: string;
@@ -35,6 +37,7 @@ export default class Room {
   public clients: Client[] = [];
 
   private server: Server;
+  private timer: NodeJS.Timeout | null = null;
 
   constructor(hotel: Hotel, data: RoomDefinition) {
     this.hotel = hotel;
@@ -49,12 +52,22 @@ export default class Room {
       const client = new Client(socket, this);
       this.addClient(client);
 
+      // if the timer is not running, start it
+      if (!this.timer) {
+        this.startTimer(0.6, this.executeTick.bind(this));
+      }
+
       this.hotel.commandFactory.outgoing.HELLO({ client });
 
       socket.on('end', () => {
         this.hotel.logger.debug(`Client ${client.id} disconnected from room ${this.id}`);
 
         this.removeClient(client);
+
+        // if there are no clients left, stop the timer
+        if (this.clients.length === 0) {
+          this.stopTimer();
+        }
       });
     });
   }
@@ -67,6 +80,24 @@ export default class Room {
   removeClient(client: Client) {
     this.clients = this.clients.filter((c) => c !== client);
     this.hotel.logger.debug(`Client ${client.id} removed from room ${this.id}`);
+  }
+
+  executeTick() {
+    // for each client, if the player object has a walkPath, move the player
+    this.clients.forEach((client) => {
+      if (client.player && client.player.walkPath.length > 0) {
+        const nextTile = client.player.walkPath.shift();
+        if (nextTile) {
+          client.player.xPos = nextTile.xPos;
+          client.player.yPos = nextTile.yPos;
+          client.player.zPos = nextTile.zPos;
+          client.player.hRot = nextTile.hRot;
+          client.player.bRot = nextTile.bRot;
+
+          this.hotel.commandFactory.outgoing.STATUS({ client });
+        }
+      }
+    });
   }
 
   movePlayer(client: Client, x: number, y: number) {
@@ -85,12 +116,24 @@ export default class Room {
       return;
     }
 
-    client.player.xPos = x;
-    client.player.yPos = y;
-    client.player.zPos = z;
-    this.hotel.logger.trace(`Client ${client.id} moved to (${x}, ${y}, ${z})`);
+    const walkPath = planPath({
+      start: {
+        xPos: client.player.xPos,
+        yPos: client.player.yPos,
+        zPos: client.player.zPos,
+        hRot: client.player.hRot,
+        bRot: client.player.bRot,
+      },
+      end: {
+        xPos: x,
+        yPos: y,
+        zPos: z,
+      },
+      heightmap: this.heightmap,
+      obstacles: this.objects,
+    });
 
-    this.hotel.commandFactory.outgoing.STATUS({ client });
+    client.player.walkPath = walkPath;
   }
 
   public start() {
@@ -105,5 +148,30 @@ export default class Room {
     this.server.close(() => {
       this.hotel.logger.info(`Room ${this.id} stopped`);
     });
+  }
+
+  public startTimer(interval: number, callback: () => void) {
+    if (this.timer) {
+      this.hotel.logger.warn(`Timer for room ${this.id} is already running`);
+      return;
+    }
+
+    this.timer = setInterval(() => {
+      callback();
+    }, interval * 1000);
+
+    this.hotel.logger.info(`Timer for room ${this.id} started with interval ${interval} seconds`);
+  }
+
+  public stopTimer() {
+    if (!this.timer) {
+      this.hotel.logger.warn(`No timer is running for room ${this.id}`);
+      return;
+    }
+
+    clearInterval(this.timer);
+    this.timer = null;
+
+    this.hotel.logger.info(`Timer for room ${this.id} stopped`);
   }
 }

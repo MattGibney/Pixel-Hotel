@@ -19,12 +19,15 @@ export default function LOGIN(props: Command) {
   const doorPos = client.room.doorPos[Math.floor(Math.random() * client.room.doorPos.length)];
   // This code is also used for the hotel view which doesn't have a door
   if (doorPos) {
-    client.player.xPos = doorPos.x;
-    client.player.yPos = doorPos.y;
-    client.player.zPos = doorPos.z;
+    client.player.xPos = doorPos.xPos;
+    client.player.yPos = doorPos.yPos;
+    client.player.zPos = doorPos.zPos;
+    client.player.hRot = doorPos.hRot;
+    client.player.bRot = doorPos.bRot;
   }
 
   client.room.hotel.commandFactory.outgoing.HEIGHTMAP({ client });
   client.room.hotel.commandFactory.outgoing.OBJECTS_WORLD({ client });
   client.room.hotel.commandFactory.outgoing.USERS({ client });
+  client.room.hotel.commandFactory.outgoing.STATUS({ client });
 }
