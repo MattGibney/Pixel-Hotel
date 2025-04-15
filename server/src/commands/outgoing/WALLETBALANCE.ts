@@ -10,9 +10,11 @@ import { Command } from '../../commandFactory';
 export default function WALLETBALANCE(props: Command) {
   const { client } = props;
 
-  const credits = 0;
+  const credits = 10;
 
   client.sendMessage(`# WALLETBALANCE\r${credits} ##`);
+  client.sendMessage('# MESSENGERSMSACCOUNT\rnoaccount ##');
+  client.sendMessage('# MESSENGERREADY ##');
   
   client.room.hotel.logger.trace(`[${client.id}] Sending WALLETBALANCE message`);
 }

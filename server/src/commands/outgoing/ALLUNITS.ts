@@ -9,8 +9,23 @@ import { Command } from '../../commandFactory';
 export default function ALLUNITS(props: Command) {
   const { client } = props;
 
-  client.sendMessage('# ALLUNITS\rMain Lobby,0,25,192.168.1.31/192.168.1.31,37121,Main Lobby\tlobby,0,25,lobby_1\r ##');
-  // client.sendMessage('# ALLUNITS\r ##');
+  const serverIP = '192.168.1.31';
+  const roomsData = [
+    {
+      name: 'Main Lobby',
+      usersNow: 0,
+      usersMax: 25,
+      serverPort: 37121,
+      cct: 'lobby',
+      modelName: 'lobby_a',
+    }
+  ];
+
+  const roomList = roomsData.map(room => {
+    return `${room.name},${room.usersNow},${room.usersMax},${serverIP}/${serverIP},${room.serverPort},${room.name}\t${room.cct},${room.usersNow},${room.usersMax},${room.modelName}`;
+  }).join('\r');
+  const response = `# ALLUNITS\r${roomList}\r ##`;
+  client.sendMessage(response);
   
   client.room.hotel.logger.trace(`[${client.id}] Sending ALLUNITS message`);
 }

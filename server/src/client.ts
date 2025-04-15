@@ -17,6 +17,7 @@ export default class Client {
 
     // Handle incoming data
     this.socket.on('data', (data) => {
+      this.room.hotel.logger.debug({ data: data.toString() }, `Received data from client ${this.id}`);
       const messages = parseMessages(data.toString());
       
       messages.forEach((message) => {
@@ -33,7 +34,7 @@ export default class Client {
 
   public sendMessage(message: string) {
     this.socket.write(message);
-    this.room.hotel.logger.trace({ message }, `Sending message to client ${this.id}`);
+    this.room.hotel.logger.debug({ message }, `Sending message to client ${this.id}`);
   }
 
   public closeConnection() {

@@ -11,7 +11,7 @@ import Player from '../../player';
 export default function LOGIN(props: Command) {
   const { client } = props;
 
-  client.room.hotel.logger.debug(`[${client.id}] LOGIN command received`);
+  // client.room.hotel.logger.debug(`[${client.id}] LOGIN command received`);
 
   const player = new Player(client.room.hotel, { id: '1', userName: 'test' });
   client.player = player;
@@ -28,6 +28,12 @@ export default function LOGIN(props: Command) {
 
   client.room.hotel.commandFactory.outgoing.HEIGHTMAP({ client });
   client.room.hotel.commandFactory.outgoing.OBJECTS_WORLD({ client });
+
+  /** This is a MUST. If you don't send the Active Objects command. It's
+   * possible to move around but not chat or interact with objects. There is no
+   * indication from the client that it's waiting for this command.
+   */
+  client.room.hotel.commandFactory.outgoing.ACTIVE_OBJECTS({ client });
   client.room.hotel.commandFactory.outgoing.USERS({ client });
   client.room.hotel.commandFactory.outgoing.STATUS({ client });
 }

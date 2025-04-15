@@ -17,5 +17,5 @@ export default function STATUS(props: Command) {
     statusString += `mv ${player.walkPath[0].xPos},${player.walkPath[0].yPos},${player.walkPath[0].zPos}/`;
   }
 
-  client.sendMessage(`# STATUS\r${statusString} ##`);
+  client.sendMessage(`#STATUS \r${statusString}##`);
 }

@@ -82,7 +82,7 @@ export default {
 
     const objects = ctx.room?.objects.map(obj => obj.join('')).join('\r');
     ctx.sendMessage(`# OBJECTS WORLD 0 lobby_a\r${objects} ##`);
-    // ctx.sendMessage('# ACTIVE_OBJECTS ##')
+    ctx.sendMessage('# ACTIVE_OBJECTS ##')
     
     const userStrings = ctx.room?.users.map(user => `${user.userName} ${user.figure} ${user.xPos} ${user.yPos} ${user.zPos} ${user.customData}`).join('\r');
     ctx.sendMessage(`# USERS\r${userStrings} ##`);
