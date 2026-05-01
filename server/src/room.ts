@@ -82,6 +82,22 @@ export default class Room {
     this.hotel.logger.debug(`Client ${client.id} removed from room ${this.id}`);
   }
 
+  chat(client: Client, message: string) {
+    if (!client.player) {
+      this.hotel.logger.error(`Client ${client.id} does not have a player`);
+      return;
+    }
+
+    // TODO: Whisper + Shout Support
+    // TODO: Players look at speaker when they talk.
+
+    const speaker = client.player.userName;
+    // Broadcast the message to all clients in the room
+    this.clients.forEach((c) => {
+      this.hotel.commandFactory.outgoing.SAY(c, { speaker, message });
+    });
+  }
+
   executeTick() {
     // for each client, if the player object has a walkPath, move the player
     this.clients.forEach((client) => {

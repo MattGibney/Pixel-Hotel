@@ -9,7 +9,7 @@ import { Command } from '../../commandFactory';
 export default function ALLUNITS(props: Command) {
   const { client } = props;
 
-  const serverIP = '192.168.1.31';
+  const serverIP = '192.168.1.87';
   const roomsData = [
     {
       name: 'Main Lobby',

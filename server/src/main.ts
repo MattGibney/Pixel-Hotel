@@ -1,5 +1,6 @@
+import express, { Request, Response } from 'express';
+
 import pino from 'pino';
-import express from 'express';
 // import { application } from './app';
 import Knex from 'knex';
 import knexConfig from './knexfile';
@@ -32,6 +33,7 @@ hotel.addRoom(lobbyData);
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });

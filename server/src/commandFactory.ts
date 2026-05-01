@@ -1,6 +1,7 @@
 import Client from './client';
 
 import APPROVENAME from './commands/incoming/APPROVENAME';
+import CHAT from './commands/incoming/CHAT';
 import CLIENTIP from './commands/incoming/CLIENTIP';
 import FINDUSER from './commands/incoming/FINDUSER';
 import GETADFORME from './commands/incoming/GETADFORME';
@@ -31,6 +32,7 @@ import HELLO from './commands/outgoing/HELLO';
 import NAME_APPROVED from './commands/outgoing/NAME_APPROVED';
 import OBJECTS_WORLD from './commands/outgoing/OBJECTS_WORLD';
 import OK from './commands/outgoing/OK';
+import SAY from './commands/outgoing/SAY';
 import SECRET_KEY from './commands/outgoing/SECRET_KEY';
 import STATUS from './commands/outgoing/STATUS';
 import USEROBJECT from './commands/outgoing/USEROBJECT';
@@ -45,6 +47,7 @@ export interface Command {
 export default {
   incoming: {
     APPROVENAME,
+    CHAT,
     CLIENTIP,
     FINDUSER,
     GETADFORME,
@@ -76,6 +79,7 @@ export default {
     NAME_APPROVED,
     OBJECTS_WORLD,
     OK,
+    SAY,
     SECRET_KEY,
     STATUS,
     USEROBJECT,
