@@ -4,6 +4,10 @@ import Client from './client';
 import { planPath } from './utils/plotPath';
 import { PlayerPos } from './player';
 
+
+// TODO: Chair Sitting
+// TODO: Look Direction when chatting
+// TODO: Look at objects when clicked
 export type RoomDefinition = {
   id: string;
   port: number;
@@ -15,6 +19,7 @@ export type RoomDefinition = {
   objects: {
     id: string;
     sprite: string;
+    type: 'furniture' | 'chair' | 'bed';
     pos: {
       x: number;
       y: number;
@@ -148,6 +153,25 @@ export default class Room {
       heightmap: this.heightmap,
       obstacles: this.objects,
     });
+
+    /**
+     * If end position is a furniture, we need to find the nearest walkable tile
+     * to it.
+     * 
+     * We could do this check before path finding, but since the server is more
+     * than powerful enough to calculate a path with an extra step, it's simpler
+     * to just remove the last tile from the walk path if the end position is an
+     * object, rather than adding in extra.
+     * 
+     * This approach has the added benefit od ensuring that the tile that the
+     * player stops on is the most logically close to the object, rather than
+     * just picking a random adjacent tile which may be further away from the
+     * player's starting position.
+     */
+    if (this.objects.some(obj => obj.pos.x === x && obj.pos.y === y && obj.type === 'furniture')) {
+      this.hotel.logger.debug(`Client ${client.id} tried to move onto an object, removed the last tile from the walk path to prevent it from trying to walk on the object`);
+      walkPath.pop();
+    }
 
     client.player.walkPath = walkPath;
   }
