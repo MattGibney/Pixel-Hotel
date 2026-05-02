@@ -6,7 +6,10 @@ const hotelViewData: RoomDefinition = {
 
   doorPos: [],
   heightmap: [],
-  objects: []
+  objects: [],
+  name: '',
+  usersMax: -1,
+  cct: ''
 };
 
 export default hotelViewData;

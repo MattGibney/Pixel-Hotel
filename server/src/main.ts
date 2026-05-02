@@ -26,6 +26,9 @@ const daoFactory = new DaoFactory(knex);
 
 const hotel = new Hotel(logger, daoFactory);
 
+/**
+ * Register the rooms the the server is listening to.
+ */
 hotel.addRoom(hotelViewData);
 hotel.addRoom(lobbyData);
 

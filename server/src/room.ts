@@ -5,12 +5,12 @@ import { planPath } from './utils/plotPath';
 import { PlayerPos } from './player';
 
 
-// TODO: Chair Sitting
 // TODO: Look Direction when chatting
 // TODO: Look at objects when clicked
 // TODO: Interact with drink vendor
 export type RoomDefinition = {
   id: string;
+  name: string;
   port: number;
 
   heightmap: (number | 'X')[][];
@@ -29,16 +29,22 @@ export type RoomDefinition = {
       r: number;
     };
   }[];
+
+  usersMax: number;
+  cct: string;
 };
 
 export default class Room {
   public hotel: Hotel;
 
   public id: RoomDefinition['id'];
+  public name: RoomDefinition['name'];
   public port: RoomDefinition['port'];
   public heightmap: RoomDefinition['heightmap'];
   public objects: RoomDefinition['objects'];
   public doorPos: RoomDefinition['doorPos'];
+  public usersMax: RoomDefinition['usersMax'];
+  public cct: RoomDefinition['cct'];
 
   public status: 'started' | 'stopped' = 'stopped';
   public clients: Client[] = [];
@@ -50,10 +56,13 @@ export default class Room {
     this.hotel = hotel;
 
     this.id = data.id;
+    this.name = data.name;
     this.port = data.port;
     this.heightmap = data.heightmap;
     this.objects = data.objects;
     this.doorPos = data.doorPos;
+    this.usersMax = data.usersMax;
+    this.cct = data.cct;
 
     this.server = new Server((socket) => {
       const client = new Client(socket, this);
@@ -77,6 +86,10 @@ export default class Room {
         }
       });
     });
+  }
+
+  get usersNow(): number {
+    return this.clients.length;
   }
 
   addClient(client: Client) {

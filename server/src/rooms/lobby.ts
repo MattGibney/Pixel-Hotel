@@ -4,7 +4,10 @@ const X = 'X';
 
 const lobbyData: RoomDefinition = {
   id: 'lobby_a',
+  name: 'Main Lobby',
+  cct: 'lobby',
   port: 37121,
+  usersMax: 50,
 
   doorPos: [
     {

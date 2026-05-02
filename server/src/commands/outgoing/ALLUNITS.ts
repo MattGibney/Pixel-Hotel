@@ -1,28 +1,21 @@
 import { Command } from '../../commandFactory';
 
 /**
- * This command provides the client witha list of all public rooms that can be
+ * This command provides the client with a list of all public rooms that can be
  * joined.
- * 
- * //TODO: Work out the specifics of the data structure sent to the client.
  */
 export default function ALLUNITS(props: Command) {
   const { client } = props;
 
+  if(!client.player) return;
+
   const serverIP = '192.168.1.87';
-  const roomsData = [
-    {
-      name: 'Main Lobby',
-      usersNow: 0,
-      usersMax: 25,
-      serverPort: 37121,
-      cct: 'lobby',
-      modelName: 'lobby_a',
-    }
-  ];
+  const roomsData = Object
+    .values(client.player.hotel.rooms)
+    .filter(room => room.id !== 'hotelView');
 
   const roomList = roomsData.map(room => {
-    return `${room.name},${room.usersNow},${room.usersMax},${serverIP}/${serverIP},${room.serverPort},${room.name}\t${room.cct},${room.usersNow},${room.usersMax},${room.modelName}`;
+    return `${room.name},${room.usersNow},${room.usersMax},${serverIP}/${serverIP},${room.port},${room.name}\t${room.cct},${room.usersNow},${room.usersMax},${room.id}`;
   }).join('\r');
   const response = `# ALLUNITS\r${roomList}\r ##`;
   client.sendMessage(response);
