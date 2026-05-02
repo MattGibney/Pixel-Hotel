@@ -8,6 +8,7 @@ import { PlayerPos } from './player';
 // TODO: Chair Sitting
 // TODO: Look Direction when chatting
 // TODO: Look at objects when clicked
+// TODO: Interact with drink vendor
 export type RoomDefinition = {
   id: string;
   port: number;

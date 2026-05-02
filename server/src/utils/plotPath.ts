@@ -20,7 +20,13 @@ function isWalkableTile(
   if (target === 'X') return false;
 
   const heightDiff = Math.abs((target as number) - from.z);
-  if (heightDiff > 1) return false;
+  /**
+   * This needs to be more than 1 as players sitting on furniture are higher
+   * than the ground tile. Having this as 1 will prevent them from getting off
+   * of furniture. Setting it to 2 would allow them to potentially walk over
+   * terrain that they shouldn't
+   */
+  if (heightDiff > 2) return false;
 
   const isObstacle = obstacles.some(
     (obj) => obj.pos.x === to.x && obj.pos.y === to.y && (obj.pos.x !== end.x || obj.pos.y !== end.y)
