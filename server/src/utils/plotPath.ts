@@ -76,7 +76,7 @@ function heuristic(a: Tile, b: Tile): number {
   return Math.max(dx, dy) + dz;
 }
 
-function calculateRotation(from: Tile, to: Tile): number {
+export function calculateRotation(from: Tile, to: Tile): number {
   const dx = to.x - from.x;
   const dy = to.y - from.y;
 

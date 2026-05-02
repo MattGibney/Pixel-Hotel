@@ -1,7 +1,7 @@
 import { Server } from 'net';
 import Hotel from './hotel';
 import Client from './client';
-import { planPath } from './utils/plotPath';
+import { calculateRotation, planPath } from './utils/plotPath';
 import { PlayerPos } from './player';
 
 
@@ -203,6 +203,32 @@ export default class Room {
     }
 
     client.player.walkPath = walkPath;
+  }
+
+  public playerLookTo(client: Client, x: number, y: number): void {
+    if (!client || !x || !y) {
+      throw Error('Invalid Parameters passed to playerLookTo function');
+    }
+
+    if (!client.player) {
+      throw Error('No player to turn')
+    }
+
+    const newRotation = calculateRotation(
+      {
+        x: client.player.xPos,
+        y: client.player.yPos,
+        z: client.player.zPos,
+      },
+      {
+        x,
+        y,
+        z: client.player.zPos,
+      }
+    );
+    client.player.hRot = newRotation;
+    client.player.bRot = newRotation;
+
   }
 
   public start() {

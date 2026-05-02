@@ -12,6 +12,7 @@ import INFORETRIEVE from './commands/incoming/INFORETRIEVE';
 import INITUNITLISTENER from './commands/incoming/INITUNITLISTENER';
 import KEYENCRYPTED from './commands/incoming/KEYENCRYPTED';
 import LOGIN from './commands/incoming/LOGIN';
+import LOOKTO from './commands/incoming/LOOKTO';
 import MESSENGERINIT from './commands/incoming/MESSENGERINIT';
 import Move from './commands/incoming/Move';
 import REGISTER from './commands/incoming/REGISTER';
@@ -58,6 +59,7 @@ export default {
     INITUNITLISTENER,
     KEYENCRYPTED,
     LOGIN,
+    LOOKTO,
     MESSENGERINIT,
     Move,
     REGISTER,
