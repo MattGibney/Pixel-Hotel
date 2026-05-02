@@ -1,10 +1,14 @@
 import { Command } from '../../commandFactory';
 import Player from '../../player';
 
-export default function STATUS(props: Command) {
+type StatusCommand = Command & {
+  player?: Player;
+};
+
+export default function STATUS(props: StatusCommand) {
   const { client } = props;
 
-  const player = client.player;
+  const player = props.player || client.player;
   if (!player) {
     client.room.hotel.logger.error('Player not found in STATUS command');
     return;

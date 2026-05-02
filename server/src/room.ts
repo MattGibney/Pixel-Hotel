@@ -2,7 +2,7 @@ import { Server } from 'net';
 import Hotel from './hotel';
 import Client from './client';
 import { calculateRotation, planPath } from './utils/plotPath';
-import { PlayerPos } from './player';
+import Player, { PlayerPos } from './player';
 
 
 // TODO: Look Direction when chatting
@@ -76,16 +76,13 @@ export default class Room {
 
       this.hotel.commandFactory.outgoing.HELLO({ client });
 
-      socket.on('end', () => {
+      const handleDisconnect = () => {
         this.hotel.logger.debug(`Client ${client.id} disconnected from room ${this.id}`);
-
         this.removeClient(client);
+      };
 
-        // if there are no clients left, stop the timer
-        if (this.clients.length === 0) {
-          this.stopTimer();
-        }
-      });
+      socket.on('end', handleDisconnect);
+      socket.on('close', handleDisconnect);
     });
   }
 
@@ -99,8 +96,21 @@ export default class Room {
   }
 
   removeClient(client: Client) {
+    const wasConnected = this.clients.includes(client);
+    if (!wasConnected) return;
+
+    const departingPlayer = client.player;
     this.clients = this.clients.filter((c) => c !== client);
+    delete this.clientStatusHashes[client.id];
     this.hotel.logger.debug(`Client ${client.id} removed from room ${this.id}`);
+
+    if (departingPlayer) {
+      this.announcePlayerLeft(departingPlayer);
+    }
+
+    if (this.clients.length === 0 && this.timer) {
+      this.stopTimer();
+    }
   }
 
   chat(client: Client, message: string) {
@@ -125,15 +135,25 @@ export default class Room {
       if (!client.player) return;
 
       this.processClientTick(client);
-      
+    });
+
+    this.clients.forEach((client) => {
+      if (!client.player) return;
+
       const statusHash = client.player.statusHash();
       if (
         !this.clientStatusHashes[client.id] ||
         this.clientStatusHashes[client.id] !== statusHash
       ) {
         this.clientStatusHashes[client.id] = statusHash;
-        this.hotel.commandFactory.outgoing.STATUS({ client });
+        this.broadcastStatus(client.player);
       }
+    });
+  }
+
+  private broadcastStatus(player: Player): void {
+    this.clients.forEach((client) => {
+      this.hotel.commandFactory.outgoing.STATUS({ client, player });
     });
   }
 
@@ -242,7 +262,38 @@ export default class Room {
     );
     client.player.hRot = newRotation;
     client.player.bRot = newRotation;
+  }
 
+  private players(): Player[] {
+    return this.clients.map(c => c.player).filter(p => p !== null) as Player[];
+  }
+
+  public announcePlayerJoined(joiningClient: Client): void {
+    if (!joiningClient.player) {
+      this.hotel.logger.error(`Client ${joiningClient.id} does not have a player`);
+      return;
+    }
+
+    const joiningPlayer = joiningClient.player;
+    const allPlayers = this.players();
+
+    this.clients.forEach((client) => {
+      if (!client.player) return;
+
+      const players = client === joiningClient ? allPlayers : [joiningPlayer];
+      this.hotel.commandFactory.outgoing.USERS({ client, players });
+      players.forEach((player) => {
+        this.hotel.commandFactory.outgoing.STATUS({ client, player });
+      });
+    });
+
+    this.clientStatusHashes[joiningClient.id] = joiningPlayer.statusHash();
+  }
+
+  private announcePlayerLeft(player: Player): void {
+    this.clients.forEach((client) => {
+      this.hotel.commandFactory.outgoing.LOGOUT({ client, player });
+    });
   }
 
   public start() {

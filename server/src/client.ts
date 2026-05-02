@@ -39,6 +39,7 @@ export default class Client {
   }
 
   public closeConnection() {
+    this.room.removeClient(this);
     this.socket.end();
     this.room.hotel.logger.info(`Closing connection for client ${this.id}`);
   }

@@ -27,3 +27,20 @@ session. While a user is in a room, there are two open sockets. One for the
 primary connection and one for the room connection. When the user wishes to
 leave the room, a signal is sent to the server informing it that the player
 wishes to leave and the server terminates the connection.
+
+## Room user updates
+
+The `USERS` command is additive on an open room connection. If the server sends
+a player that the client already knows about, the Shockwave client creates a
+duplicate avatar instead of replacing the existing one.
+
+On login, the joining client should receive a `USERS` payload containing every
+current player in the room, including itself. Existing room clients should only
+receive the newly joined player in their `USERS` payload.
+
+After each join `USERS` payload, the server should send `STATUS` for the same
+set of players. This lets the client apply stateful effects, such as existing
+players already sitting on furniture.
+
+When a player leaves, remaining clients should receive `LOGOUT` for the
+departed player. Do not send `USERS` to represent removal.

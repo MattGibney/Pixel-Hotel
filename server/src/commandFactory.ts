@@ -30,6 +30,7 @@ import ENCRYPTION_OFF from './commands/outgoing/ENCRYPTION_OFF';
 import ERROR from './commands/outgoing/ERROR';
 import HEIGHTMAP from './commands/outgoing/HEIGHTMAP';
 import HELLO from './commands/outgoing/HELLO';
+import LOGOUT from './commands/outgoing/LOGOUT';
 import NAME_APPROVED from './commands/outgoing/NAME_APPROVED';
 import OBJECTS_WORLD from './commands/outgoing/OBJECTS_WORLD';
 import OK from './commands/outgoing/OK';
@@ -78,6 +79,7 @@ export default {
     ERROR,
     HEIGHTMAP,
     HELLO,
+    LOGOUT,
     NAME_APPROVED,
     OBJECTS_WORLD,
     OK,

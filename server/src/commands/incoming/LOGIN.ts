@@ -9,11 +9,16 @@ import Player from '../../player';
  * //TODO: Understand what this command does and implement it.
  */
 export default function LOGIN(props: Command) {
-  const { client } = props;
+  const { client, args } = props;
 
+  if (!args || !args[0]) return;
+
+  const userName = String(args[0]);
   // client.room.hotel.logger.debug(`[${client.id}] LOGIN command received`);
 
-  const player = new Player(client.room.hotel, { id: '1', userName: 'test' });
+  // TODO: Username Lookup + authentication
+
+  const player = new Player(client.room.hotel, { id: '1', userName: userName });
   client.player = player;
 
   const doorPos = client.room.doorPos[Math.floor(Math.random() * client.room.doorPos.length)];
@@ -34,6 +39,6 @@ export default function LOGIN(props: Command) {
    * indication from the client that it's waiting for this command.
    */
   client.room.hotel.commandFactory.outgoing.ACTIVE_OBJECTS({ client });
-  client.room.hotel.commandFactory.outgoing.USERS({ client });
-  client.room.hotel.commandFactory.outgoing.STATUS({ client });
+
+  client.room.announcePlayerJoined(client);
 }
