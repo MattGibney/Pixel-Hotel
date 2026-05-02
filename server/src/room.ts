@@ -20,6 +20,7 @@ export type RoomDefinition = {
     id: string;
     sprite: string;
     type: 'furniture' | 'chair' | 'bed';
+    sitOffset?: number; // Only used for chairs and beds, determines the z position of the player when sitting on it
     pos: {
       x: number;
       y: number;
@@ -109,11 +110,25 @@ export default class Room {
       if (client.player && client.player.walkPath.length > 0) {
         const nextTile = client.player.walkPath.shift();
         if (nextTile) {
+          client.player.isSitting = false;
           client.player.xPos = nextTile.xPos;
           client.player.yPos = nextTile.yPos;
           client.player.zPos = nextTile.zPos;
           client.player.hRot = nextTile.hRot;
           client.player.bRot = nextTile.bRot;
+
+          // If this is the last walk tile and it's a chair, set the player's
+          // sitting status to true
+          if (client.player.walkPath.length === 0) {
+            const chair = this.objects.find(obj => obj.pos.x === nextTile.xPos && obj.pos.y === nextTile.yPos && obj.type === 'chair');
+            if (chair) {
+              client.player.isSitting = true;
+              client.player.zPos = chair.pos.z + (chair.sitOffset || 0);
+              client.player.hRot = chair.pos.r;
+              client.player.bRot = chair.pos.r;
+              this.hotel.logger.debug(`Client ${client.id} is now sitting on chair ${chair.id}`);
+            }
+          }
 
           this.hotel.commandFactory.outgoing.STATUS({ client });
         }
