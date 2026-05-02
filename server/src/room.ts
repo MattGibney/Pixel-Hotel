@@ -48,6 +48,7 @@ export default class Room {
 
   public status: 'started' | 'stopped' = 'stopped';
   public clients: Client[] = [];
+  public clientStatusHashes: { [k: string]: string } = {};
 
   private server: Server;
   private timer: NodeJS.Timeout | null = null;
@@ -121,7 +122,23 @@ export default class Room {
   executeTick() {
     // for each client, if the player object has a walkPath, move the player
     this.clients.forEach((client) => {
-      if (client.player && client.player.walkPath.length > 0) {
+      if (!client.player) return;
+
+      this.processClientTick(client);
+      
+      const statusHash = client.player.statusHash();
+      if (
+        !this.clientStatusHashes[client.id] ||
+        this.clientStatusHashes[client.id] !== statusHash
+      ) {
+        this.clientStatusHashes[client.id] = statusHash;
+        this.hotel.commandFactory.outgoing.STATUS({ client });
+      }
+    });
+  }
+
+  private processClientTick(client: Client): void {
+    if (client.player && client.player.walkPath.length > 0) {
         const nextTile = client.player.walkPath.shift();
         if (nextTile) {
           client.player.isSitting = false;
@@ -143,11 +160,8 @@ export default class Room {
               this.hotel.logger.debug(`Client ${client.id} is now sitting on chair ${chair.id}`);
             }
           }
-
-          this.hotel.commandFactory.outgoing.STATUS({ client });
         }
       }
-    });
   }
 
   movePlayer(client: Client, x: number, y: number) {

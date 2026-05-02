@@ -20,7 +20,8 @@
     "pino": "^9.1.0",
     "pino-pretty": "^11.3.0",
     "ts-node": "^10.9.2",
-    "ulid": "^2.3.0"
+    "ulid": "^2.3.0",
+    "xxhash-addon": "^2.1.0"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",

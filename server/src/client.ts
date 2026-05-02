@@ -2,6 +2,7 @@ import { Socket } from 'net';
 import Player from './player';
 import Room from './room';
 import { parseMessages } from './utils/parser';
+import { ulid } from 'ulid';
 
 export default class Client {
   public socket: Socket;
@@ -11,7 +12,7 @@ export default class Client {
   public player: Player | null = null;
 
   constructor(socket: Socket, room: Room) {
-    this.id = socket.remoteAddress || 'unknown';
+    this.id = ulid();
     this.socket = socket;
     this.room = room;
 

@@ -1,4 +1,5 @@
 import Hotel from './hotel';
+import XXH from 'xxhash-addon';
 
 export type PlayerPos = {
   xPos: number;
@@ -37,5 +38,24 @@ export default class Player {
 
     this.id = data.id;
     this.userName = data.userName;
+  }
+
+  /**
+   * By hashing all status properties together, we can easily track wether the
+   * status of a player has been updated since the last tick.
+   */
+  statusHash(): string {
+    const fingerPrint = {
+      xPos: this.xPos,
+      yPos: this.yPos,
+      zPos: this.zPos,
+      hRot: this.hRot,
+      bRot: this.bRot,
+      isSitting: this.isSitting,
+    };
+    const fingerPrintBuffer = Buffer.from(JSON.stringify(fingerPrint));
+    const result = XXH.XXHash32.hash(fingerPrintBuffer).toString('hex');
+    this.hotel.logger.trace(`${this.id} | StatusHash = ${result}`);
+    return result;
   }
 }
